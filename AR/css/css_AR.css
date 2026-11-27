@@ -1,0 +1,372 @@
+/* ========= Global theme ========= */
+:root {
+  --bg: #f5f7fa;;
+  --text: #222;
+  --muted: #5f6b7a;
+  --border: #d7dbe0;
+  --card: #fff;
+  --danger: #b1002e;
+  --success: #2e7d32;
+}
+
+/* ========= Base layout & typography ========= */
+html, body { height: 100%; margin: 0; }
+body, .jspsych-display-element {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  line-height: 1.55;
+}
+.jspsych-content {
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 24px;
+  text-align: left;
+}
+h1, h2, h3 { line-height: 1.25; margin: 0 0 14px; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.4rem; color: var(--muted); }
+p, ul, ol { margin: 0 0 16px; }
+.jspsych-content img { max-width: 100%; height: auto; display: block; margin: 16px auto; }
+
+/* ========= Forms ========= */
+label { cursor: pointer; }
+input[type="radio"], input[type="checkbox"] { width: 1.1rem; height: 1.1rem; vertical-align: -2px; margin-right: 8px; }
+input[type="text"], input[type="number"], textarea, select {
+  width: 100%; padding: 10px 12px; border: 1px solid var(--border);
+  border-radius: 8px; background: #fff; font: inherit; box-sizing: border-box;
+}
+textarea { min-height: 110px; }
+.jspsych-content form > * + * { margin-top: 14px; }
+
+/* ========= Buttons (ALL neutral) ========= */
+.jspsych-btn,
+input[type="submit"], input[type="button"], button {
+  display: inline-block;
+  font: inherit; font-weight: 700;
+  padding: 14px 26px;
+  border-radius: 10px;
+  border: 2px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  cursor: pointer;
+  transition: background .15s ease, transform .02s;
+  min-width: 150px;
+}
+.jspsych-btn:hover,
+input[type="submit"]:hover, input[type="button"]:hover, button:hover {
+  background: #f6f7f9;
+}
+.jspsych-btn:active,
+input[type="submit"]:active, input[type="button"]:active, button:active {
+  transform: translateY(1px);
+}
+.jspsych-btn[disabled], input[disabled] { opacity: .6; cursor: not-allowed; }
+
+/* ========= Cards / panels ========= */
+.card, .panel, .scenario-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px;
+  box-shadow: 0 1px 0 rgba(0,0,0,.02);
+  margin-bottom: 28px;
+}
+
+/* ========= Prompts / Questions ========= */
+.prompt-centered {
+  text-align: center;
+  font-weight: 800;
+  font-size: 1.4rem;
+  line-height: 1.4;
+  margin: 32px 0 20px;
+}
+
+/* ========= Response scale coloring ========= */
+.jspsych-html-button-response-btngroup {
+  display: flex; flex-wrap: wrap; gap: 14px; justify-content: center;
+  margin-top: 24px;
+}
+.jspsych-html-button-response-btngroup .jspsych-btn { min-width: 160px; }
+
+/* Color coding for a 4-option grant/deny scale (by position) */
+.jspsych-html-button-response-btngroup > *:nth-child(1) .jspsych-btn,
+.jspsych-html-button-response-btngroup > *:nth-child(2) .jspsych-btn,
+.jspsych-html-button-response-btngroup > button:nth-child(1),
+.jspsych-html-button-response-btngroup > button:nth-child(2) {
+  color: var(--success);
+}
+.jspsych-html-button-response-btngroup > *:nth-child(3) .jspsych-btn,
+.jspsych-html-button-response-btngroup > *:nth-child(4) .jspsych-btn,
+.jspsych-html-button-response-btngroup > button:nth-child(3),
+.jspsych-html-button-response-btngroup > button:nth-child(4) {
+  color: var(--danger);
+}
+
+/* ========= Utilities ========= */
+.center { text-align: center; }
+.mt-1 { margin-top: 8px !important; }
+.mt-2 { margin-top: 16px !important; }
+.mt-3 { margin-top: 24px !important; }
+.mb-0 { margin-bottom: 0 !important; }
+.gap-1 { gap: 8px !important; }
+.gap-2 { gap: 12px !important; }
+.width-100 { width: 100% !important; }
+
+/* ========= Trial-specific overrides ========= */
+
+/* Only center the trial response buttons */
+.jspsych-content .jspsych-html-button-response-btngroup {
+  justify-content: center;
+}
+
+/* ========= Responsive ========= */
+@media (max-width: 640px){
+  .jspsych-content { padding: 16px; margin: 24px auto; }
+  .jspsych-html-button-response-btngroup { gap: 10px; }
+  .jspsych-html-button-response-btngroup .jspsych-btn,
+  .jspsych-btn, input[type="submit"], input[type="button"], button {
+    width: 100%; min-width: 0;
+  }
+}
+
+/* Center response buttons only on trial pages */
+.trial-card ~ .jspsych-html-button-response-btngroup {
+  max-width: 800px;      /* match the card */
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;         /* ensure flex context */
+  justify-content: center;
+}
+
+/* ========= questionnaires (jsPsychSurveyLikert) =========
+   Usage: add css_classes: ['lkrt'] to each survey-likert trial.
+   This styles the prompt + options as one connected “card”.
+===========================================================*/
+
+/* ---- Theme knobs (edit these, everything else follows) ---- */
+.lkrt{
+  --lkrt-max: 920px;             /* page width inside questionnaire pages   */
+  --lkrt-radius: 16px;            /* outer card roundness                    */
+  --lkrt-border: #ffffff;         /* card border color (white, as requested) */
+  --lkrt-shadow: 0 1px 1px rgba(0,0,0,.02), 0 8px 20px rgba(17,24,39,.04);
+  --lkrt-gap: 14px;               /* spacing between options                 */
+  --lkrt-accent: #2563eb;         /* radio focus/checked color               */
+  --lkrt-prompt-size: 18.75px;    /* question stem size                      */
+  --lkrt-label-size: 13.5px;      /* option-label size                       */
+  --lkrt-radio-scale: 1.45;       /* radio circle size                       */
+  --lkrt-muted: #4b5563;          /* option-label base color                 */
+}
+
+/* Limit content width for these screens only */
+.lkrt #jspsych-content, .lkrt .jspsych-content{
+  max-width: var(--lkrt-max);
+  margin: 0 auto;
+}
+
+/* Preamble text at the very top (“Below is a series…”) */
+.lkrt .jspsych-survey-likert-preamble{
+  font-size: 20px !important;
+  line-height: 1.5 !important;
+  margin-bottom: 22px !important;
+  color: #111827 !important;
+}
+
+/* ---------- Connected “card”: prompt (top) + options (bottom) ---------- */
+
+/* Shared geometry for both halves */
+.lkrt .jspsych-survey-likert-statement,
+.lkrt .jspsych-survey-likert-opts{
+  background: #fff !important;
+  border: 1px solid var(--lkrt-border) !important; /* white border */
+  box-shadow: var(--lkrt-shadow) !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  margin-inline: 0 !important;
+}
+
+/* Top half: the item stem */
+.lkrt .jspsych-survey-likert-statement{
+  border-radius: var(--lkrt-radius) var(--lkrt-radius) 0 0 !important;
+  border-bottom: 0 !important;                 /* remove interior seam */
+  padding: 20px 24px 10px !important;
+  margin: 16px 0 0 !important;
+  font-size: var(--lkrt-prompt-size) !important;
+  font-weight: 650 !important;
+  letter-spacing: .2px !important;
+  line-height: 1.45 !important;
+  color: #111827 !important;
+}
+
+/* Bottom half: the scale row */
+.lkrt .jspsych-survey-likert-opts{
+  border-radius: 0 0 var(--lkrt-radius) var(--lkrt-radius) !important;
+  border-top: 0 !important;                    /* remove interior seam */
+  padding: 12px 24px 16px !important;
+  margin: 0 0 16px !important;
+  overflow: hidden !important;
+  list-style: none !important;
+
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: flex-start !important;
+  gap: var(--lkrt-gap) !important;
+}
+
+/* Kill any plugin “baseline” rule that might get injected */
+.lkrt .jspsych-survey-likert-opts::before{ content:none !important; display:none !important; }
+
+/* Even columns across the row */
+.lkrt .jspsych-survey-likert-opts > li{
+  display: flex !important;
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+/* Anchor (label) + radio stacked vertically */
+.lkrt .jspsych-survey-likert-opts label,
+.lkrt .jspsych-survey-likert-opt-label{
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-size: var(--lkrt-label-size) !important;
+  color: var(--lkrt-muted) !important;
+  padding: 6px 8px !important;                 /* larger tap target    */
+  border-radius: 8px !important;
+  transition: background .12s, color .12s, transform .12s !important;
+}
+.lkrt .jspsych-survey-likert-opts label:hover{
+  background: #f2f4f8 !important;
+  color: #111827 !important;
+}
+.lkrt .jspsych-survey-likert-opts label:has(input:checked){
+  background: #e9efff !important;
+  color: #111827 !important;
+  font-weight: 700 !important;
+  transform: translateY(-1px) !important;      /* subtle “picked” cue  */
+}
+
+/* Radios: larger and with accessible focus ring */
+.lkrt .jspsych-survey-likert-opts input[type="radio"]{
+  position: static !important;                 /* defeat left:50% hack */
+  margin: 0 !important;
+  transform: scale(var(--lkrt-radio-scale)) !important;
+  accent-color: var(--lkrt-accent) !important;
+}
+.lkrt .jspsych-survey-likert-opts input[type="radio"]:focus-visible{
+  outline: 2px solid var(--lkrt-accent) !important;
+  outline-offset: 3px !important;
+}
+
+/* Answered-card cue (keeps border white per your choice) */
+.lkrt .jspsych-survey-likert-statement:has(+ .jspsych-survey-likert-opts input:checked),
+.lkrt .jspsych-survey-likert-opts:has(input:checked){
+  border-color: var(--lkrt-border) !important;  /* stays white */
+  background: #f9fbff !important;
+}
+
+/* Responsive: two columns per row on small screens */
+@media (max-width: 700px){
+  .lkrt .jspsych-survey-likert-opts{ flex-wrap: wrap !important; }
+  .lkrt .jspsych-survey-likert-opts > li{ flex: 1 1 calc(50% - var(--lkrt-gap)) !important; }
+}
+
+/* ========= RTL / Arabic layout ========= */
+.rtl {
+  direction: rtl;
+  text-align: right;
+  unicode-bidi: embed;
+}
+.rtl .ltr {
+  direction: ltr;
+  display: inline-block;
+  unicode-bidi: embed;
+}
+
+/* Force bidi embedding on every paragraph inside the consent preamble.
+   unicode-bidi is not inherited, so must be set explicitly on <p> elements. */
+.jspsych-survey-multi-choice-preamble p {
+  direction: rtl;
+  unicode-bidi: embed;
+}
+
+/* ========= Phones (screens up to 640px wide) =========
+   Desktop layout is unchanged. Several rules need !important because the survey
+   scripts set some of these styles inline. */
+@media (max-width: 640px){
+
+  /* Headings and consent-form section titles a size smaller */
+  h1 { font-size: 1.5rem; }
+  #jspsych-survey-multi-choice-form div[style*="font-size"] { font-size: 1.15rem !important; }
+
+  /* Response buttons (Grant/Deny scale, Continue, Finish): one full-width button per
+     row, top to bottom in the same order as left to right on desktop */
+  #jspsych-html-button-response-btngroup {
+    flex-direction: column !important;
+    flex-wrap: nowrap !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+    width: 100% !important;
+    max-width: 100% !important;   /* jsPsych's own stylesheet limits the group to fit-content */
+  }
+  #jspsych-html-button-response-btngroup .jspsych-btn {
+    width: 100% !important;
+    margin: 0 !important;
+  }
+  #jspsych-html-button-response-btngroup .jspsych-btn > div {
+    width: 100% !important;
+    height: 56px !important;
+    box-sizing: border-box;
+  }
+
+  /* Likert answers (attention checks, DUREL): one vertical list in scale order,
+     radio button next to its label */
+  .lkrt .jspsych-survey-likert-opts {
+    flex-direction: column !important;
+    flex-wrap: nowrap !important;
+    align-items: stretch !important;
+    gap: 4px !important;
+  }
+  .lkrt .jspsych-survey-likert-opts > li {
+    flex: none !important;
+    width: 100% !important;
+    justify-content: flex-start !important;
+  }
+  .lkrt .jspsych-survey-likert-opts label,
+  .lkrt .jspsych-survey-likert-opt-label {
+    width: 100% !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    gap: 12px !important;
+    text-align: start !important;
+    font-size: 15px !important;
+    padding: 6px 4px !important;
+  }
+
+  /* Continue/submit buttons stay within the screen */
+  .jspsych-btn, input[type="submit"] {
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+}
+
+/* ========= Answer options: wrapped text stays next to the button =========
+   Multiple-choice (radio) and multi-select (checkbox) answers: the button and the
+   text sit side by side, so a second line of text starts under the first line of
+   text, not under the button. Works for right-to-left text as well. */
+label.jspsych-survey-multi-choice-text,
+label.jspsych-survey-multi-select-text {
+  display: inline-flex;
+  align-items: baseline;
+  text-align: start !important;   /* jsPsych centres side-by-side options; wrapped lines should align with the first */
+}
+label.jspsych-survey-multi-choice-text > input,
+label.jspsych-survey-multi-select-text > input {
+  flex: none;
+  margin: 0 !important;
+  margin-inline-end: 10px !important;
+}

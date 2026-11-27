@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Decisiones en la clínica</title>
+  <!-- jsPsych 8.0.3 with the 2.0.0 plugins (the versions the Arabic pilot ran on), hosted in jspsych/ -->
+  <script src="jspsych/jspsych.js"></script>
+  <script src="jspsych/plugin-html-button-response.js"></script>
+  <script src="jspsych/plugin-html-keyboard-response.js"></script>
+  <script src="jspsych/plugin-survey-html-form.js"></script>
+  <script src="jspsych/plugin-survey-likert.js"></script>
+  <script src="jspsych/plugin-survey-multi-choice.js"></script>
+  <script src="jspsych/plugin-survey-multi-select.js"></script>
+  <script src="jspsych/plugin-survey-text.js"></script>
+  <link href="jspsych/jspsych.css" rel="stylesheet" type="text/css" />
+  <link href="css/css.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+  <div style="position:fixed;top:0;left:0;right:0;z-index:1000;background:#fff4d6;border-bottom:1px solid #e0c97a;font-family:Arial,sans-serif;font-size:14px;text-align:center;padding:6px;direction:ltr;">Demo version: responses are not recorded. <a href="../index.html">Start page</a></div><div style="height:34px"></div>
+  <!-- The survey is displayed in here -->
+  <div id="jspsych-target"></div>
+
+  <!-- Face norms, study lookup and BeSample key; must load before the survey script -->
+  <script src="js/cfd_subset.js"></script>
+  <script src="js/country_lookup.js"></script>
+  <script src="js/bkey_private.js"></script>
+
+  <!-- The survey (settings such as DEBUG, SAVE_DATA and TEST_STUDY are at the top) -->
+  <script src="js/survey_ES.js"></script>
+</body>
+</html>
